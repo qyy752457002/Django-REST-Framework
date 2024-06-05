@@ -1,0 +1,1 @@
+docker build -t krismile98/rest_api:1.0 .
