@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from rest_framework.permissions import IsAuthenticated
 from rest_framework import generics, status
 from rest_framework.response import Response
 from .models import BlogPost
@@ -13,6 +13,8 @@ class BlogPostListCreate(generics.ListCreateAPIView):
     queryset = BlogPost.objects.all()
     # 指定序列化器
     serializer_class = BlogPostSerializer
+    # 指定权限
+    permission_classes = [IsAuthenticated]
 
     # 删除所有博客文章
     def delete(self, request, *args, **kwargs):
@@ -27,9 +29,16 @@ class BlogPostReteriveUpdateDestory(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = BlogPostSerializer
     # 指定主键字段
     lookup_field = "pk"
+    # 指定权限
+    permission_classes = [IsAuthenticated]
 
 # 博客文章列表视图
 class BlogPostList(APIView):
+    # 指定序列化器
+    serializer_class = BlogPostSerializer
+    # 指定权限
+    permission_classes = [IsAuthenticated]
+
     def get(self, request, format=None):
         # 获取查询参数中的 title
         title = request.query_params.get('title', '')
